@@ -6,7 +6,8 @@ import { StudentList } from './views/day03显示学生列表/index'
 import { Ball } from './views/day04自动移动的小球/index'
 import { Tick } from './views/day05事件'
 
-import Pagnation from './views/day06分页组件'
+// import Pagnation from './views/day06分页组件'
+import PageTest from './views/day06分页组件/pageTest'
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
 
      {/* <Tick/> */}
 
-     <Pagnation/>
+     {/* <Pagnation {...{pageNo:1, pageSize: 11, totalCount: 99}}/> */}
+     <PageTest/>
     </div>
   );
 }

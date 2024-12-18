@@ -1,4 +1,4 @@
-export const getStudentsList = () =>{
+export const getStudentsList = (pageNo=1, pageSize=10) =>{
     return new Promise((resolve, reject)=>{
         let result = [];
 
@@ -12,6 +12,13 @@ export const getStudentsList = () =>{
             })
         }
 
-        resolve(result)
+        // 1 1 - 10
+        // 2 11 - 20
+        // 3 21 - 30
+        let startIndex = pageNo * pageSize - pageSize
+        let endIndex = startIndex + pageSize
+       const pageResult =  result.slice(startIndex, endIndex)
+
+        resolve(pageResult)
     })
 }
