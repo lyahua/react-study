@@ -1,21 +1,50 @@
 import React from "react";
 import Pagnation from './index.jsx'
+import { getStudentsList } from './students.js'
+import { StudentsItem } from '../day03显示学生列表/studentsitem.jsx'
 
-export default class PageTest extends React.Component{
+export default class PageTest extends React.Component {
     state = {
-        pageNo:3, pageSize: 11, totalCount: 99
+        pageParams: {
+
+            pageNo: 1, pageSize: 9, 
+        },
+        totalCount: 99,
+        data: []
     }
 
-    onPageChange=(newPageNo)=>{
-        console.log('%c 新页码' +newPageNo,'color: red')
+    onPageChange =  (newPageNo) => {
+        console.log('%c 新页码' + newPageNo, 'color: red')
         this.setState({
-            pageNo: newPageNo
+            pageParams: {
+                ...this.state.pageParams,
+                pageNo: newPageNo
+            }
+        },async ()=>{
+            await this.initData()
+        })
+
+        
+    }
+
+   async initData(){
+        const res = await getStudentsList(this.state.pageParams.pageNo, this.state.pageParams.pageSize)
+        this.setState({
+            data: res.data,
+            totalCount: res.totalCount
         })
     }
-    render(){
+
+    async componentDidMount() {
+        await this.initData()
+    }
+    render() {
         return (
             <>
-                <Pagnation {...this.state} onPageChange = {this.onPageChange}/>
+                {
+                    this.state.data.map(item => <StudentsItem {...item} key={item.id} />)
+                }
+                <Pagnation {...this.state.pageParams} totalCount={this.state.totalCount} onPageChange={this.onPageChange} />
             </>
         )
     }

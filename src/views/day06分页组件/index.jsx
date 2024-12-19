@@ -55,6 +55,13 @@ export default function Pagnation(props) {
             <span className="item" onClick={() => pageChange((props.pageNo + 1) > pageNumber ? pageNumber : props.pageNo + 1, props)}>下一页</span>
             <span className={props.pageNo === pageNumber ? "item disable" : 'item'} onClick={() => pageChange(pageNumber, props)}>尾页</span>
 
+            <select name="pageSizeList" className="item" onChange={onPageSizeChange}>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value={2000}>200</option>
+            </select>
             {
                 props.pageNo + '/' + pageNumber
             }
@@ -70,6 +77,10 @@ function pageChange(newPageNo, props) {
 
     props.onPageChange && props.onPageChange(newPageNo)
 
+}
+
+function onPageSizeChange(newPageSize, props){
+    console.log('%c newPageSize', newPageSize)
 }
 
 // 计算最小页数
